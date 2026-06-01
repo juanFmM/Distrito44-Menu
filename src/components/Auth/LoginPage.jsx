@@ -16,19 +16,21 @@ export default function LoginPage({ onLogin, error }) {
   }
 
   return (
-    <div className="min-h-screen bg-[#0d0d0d] flex items-center justify-center px-4">
+    <div className="min-h-screen bg-[#0d0d0d] flex items-center justify-center px-4"
+      style={{ background: 'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(212,160,23,0.08) 0%, #0d0d0d 60%)' }}
+    >
       <div className="w-full max-w-sm">
         {/* Logo */}
-        <div className="text-center mb-10">
+        <div className="anim-fade-up text-center mb-10">
           <p className="text-[#D4A017] text-xs font-medium tracking-widest uppercase mb-1">
             Panel de administración
           </p>
-          <h1 className="font-display text-6xl text-white">Distrito 44</h1>
+          <h1 className="hero-text font-display text-7xl">Distrito 44</h1>
           <p className="text-gray-600 text-sm mt-1">Garden Food Truck</p>
         </div>
 
         {/* Card */}
-        <div className="bg-[#1a1a1a] border border-[#2e2e2e] rounded-2xl p-8">
+        <div className="anim-fade-up delay-1 bg-[#1a1a1a] border border-[#2e2e2e] rounded-2xl p-8 shadow-xl shadow-black/40">
           <h2 className="text-white font-semibold text-lg mb-6">Iniciar sesión</h2>
 
           <form onSubmit={handleSubmit} className="space-y-4">

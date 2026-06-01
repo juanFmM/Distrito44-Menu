@@ -131,13 +131,16 @@ export function useMenuData() {
   async function updateItem(id, updates) {
     if (USE_SUPABASE) {
       const row = {
-        category_id: updates.categoryId ?? updates.category_id,
-        name:        updates.name,
-        description: updates.description,
-        price:       updates.price,
-        badge:       updates.badge || null,
-        image_url:   updates.imageUrl || null,
+        category_id:  updates.categoryId ?? updates.category_id,
+        name:         updates.name,
+        description:  updates.description,
+        price:        updates.price,
+        badge:        updates.badge || null,
+        image_url:    updates.imageUrl || null,
+        sales_count:  updates.sales_count ?? undefined,
       }
+      // Eliminar campos undefined para no sobreescribir lo que no cambia
+      Object.keys(row).forEach(k => row[k] === undefined && delete row[k])
       const { error } = await supabase.from('items').update(row).eq('id', id)
       if (error) throw error
     }
@@ -221,7 +224,8 @@ function normalizeItem(item) {
   if (!item) return item
   return {
     ...item,
-    categoryId: item.category_id ?? item.categoryId,
+    categoryId:  item.category_id  ?? item.categoryId,
+    sales_count: item.sales_count  ?? 0,
     imageUrl:   item.image_url   ?? item.imageUrl ?? null,
   }
 }

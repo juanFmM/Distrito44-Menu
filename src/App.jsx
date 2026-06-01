@@ -85,7 +85,7 @@ export default function App() {
         />
         <button
           onClick={() => setView('menu')}
-          className="fixed bottom-6 right-6 flex items-center gap-2 bg-white text-black font-semibold px-5 py-3 rounded-full shadow-xl hover:bg-gray-100 transition-colors cursor-pointer text-sm z-50"
+          className="fab fixed bottom-6 right-6 flex items-center gap-2 bg-white text-black font-semibold px-5 py-3 rounded-full shadow-xl cursor-pointer text-sm z-50"
         >
           👁️ Ver menú
         </button>
@@ -101,7 +101,7 @@ export default function App() {
       {/* FAB — solo visible para admin o para ir a login */}
       <button
         onClick={handleAdminClick}
-        className="fixed bottom-6 right-6 flex items-center gap-2 bg-[#D4A017] text-black font-semibold px-5 py-3 rounded-full shadow-xl hover:bg-[#e6b020] transition-colors cursor-pointer text-sm z-50"
+        className="fab fixed bottom-6 right-6 flex items-center gap-2 bg-[#D4A017] text-black font-semibold px-5 py-3 rounded-full shadow-xl cursor-pointer text-sm z-50"
       >
         {user ? '⚙️ Administrar' : '🔐 Admin'}
       </button>

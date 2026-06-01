@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import CategoryForm from './CategoryForm'
 import ItemForm from './ItemForm'
+import Dashboard from './Dashboard'
 
 export default function AdminPanel({
   categories, items,
@@ -9,7 +10,7 @@ export default function AdminPanel({
   resetToDefault, uploadImage,
   user, onSignOut, usingSupabase,
 }) {
-  const [tab, setTab]               = useState('items')
+  const [tab, setTab]               = useState('dashboard')
   const [editingCat, setEditingCat] = useState(null)
   const [editingItem, setEditingItem] = useState(null)
   const [showNewCat, setShowNewCat] = useState(false)
@@ -83,14 +84,18 @@ export default function AdminPanel({
       {/* Tabs */}
       <div className="border-b border-[#2e2e2e] px-6">
         <div className="flex gap-1 max-w-4xl mx-auto">
-          {['items', 'categories'].map((t) => (
+          {[
+            { key: 'dashboard',  label: '📊 Dashboard' },
+            { key: 'items',      label: '🍔 Platos' },
+            { key: 'categories', label: '📂 Categorías' },
+          ].map(({ key, label }) => (
             <button
-              key={t}
-              onClick={() => setTab(t)}
-              className={`px-5 py-3 text-sm font-medium transition-colors cursor-pointer border-b-2 -mb-px
-                ${tab === t ? 'text-[#D4A017] border-[#D4A017]' : 'text-gray-500 border-transparent hover:text-gray-300'}`}
+              key={key}
+              onClick={() => setTab(key)}
+              className={`px-5 py-3 text-sm font-medium transition-all cursor-pointer border-b-2 -mb-px
+                ${tab === key ? 'text-[#D4A017] border-[#D4A017]' : 'text-gray-500 border-transparent hover:text-gray-300'}`}
             >
-              {t === 'items' ? '🍔 Platos' : '📂 Categorías'}
+              {label}
             </button>
           ))}
         </div>
@@ -104,6 +109,15 @@ export default function AdminPanel({
             <p className="text-red-400 text-sm">{actionError}</p>
             <button onClick={() => setActionError(null)} className="text-red-600 hover:text-red-400 cursor-pointer text-lg leading-none">×</button>
           </div>
+        )}
+
+        {/* ── DASHBOARD TAB ── */}
+        {tab === 'dashboard' && (
+          <Dashboard
+            categories={categories}
+            items={items}
+            updateItem={updateItem}
+          />
         )}
 
         {/* ── ITEMS TAB ── */}

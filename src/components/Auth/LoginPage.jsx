@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 
 export default function LoginPage({ onLogin, error }) {
   const [email, setEmail]       = useState('')
@@ -8,33 +8,41 @@ export default function LoginPage({ onLogin, error }) {
   async function handleSubmit(e) {
     e.preventDefault()
     setLoading(true)
-    try {
-      await onLogin(email, password)
-    } finally {
-      setLoading(false)
-    }
+    try { await onLogin(email, password) }
+    finally { setLoading(false) }
   }
 
+  const inputClass = "w-full bg-[#0a0908] border border-[#2a2520] rounded-sm px-4 py-3 text-[#e8e2d9] placeholder-[#3a342e] focus:outline-none focus:border-[#ff6600] text-sm transition-colors"
+
   return (
-    <div className="min-h-screen bg-[#0d0d0d] flex items-center justify-center px-4"
-      style={{ background: 'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(255,102,0,0.08) 0%, #0d0d0d 60%)' }}
+    <div
+      className="min-h-screen flex items-center justify-center px-4"
+      style={{
+        background: '#0c0b09',
+        backgroundImage: 'radial-gradient(ellipse 80% 50% at 50% -10%, rgba(255,102,0,0.07) 0%, transparent 60%)',
+      }}
     >
       <div className="w-full max-w-sm">
         {/* Logo */}
-        <div className="anim-fade-up text-center mb-10">
-          <div className="flex justify-center mb-3">
-            <img src="/logo-clean.svg" alt="Distrito 44" className="logo-glow h-20 w-auto" />
+        <div className="anim-fade-up text-center mb-12">
+          <div className="flex justify-center mb-5">
+            <img src="/logo-clean.svg" alt="Distrito 44" className="logo-glow h-16 w-auto" />
           </div>
-          <p className="text-gray-600 text-xs tracking-widest uppercase mt-2">Panel de administración</p>
+          <div className="flex items-center justify-center gap-3">
+            <span className="w-8 h-px bg-[#2a2520]" />
+            <p className="label-caps">Acceso restringido</p>
+            <span className="w-8 h-px bg-[#2a2520]" />
+          </div>
         </div>
 
-        {/* Card */}
-        <div className="anim-fade-up delay-1 bg-[#1a1a1a] border border-[#2e2e2e] rounded-2xl p-8 shadow-xl shadow-black/40">
-          <h2 className="text-white font-semibold text-lg mb-6">Iniciar sesión</h2>
+        {/* Formulario */}
+        <div className="anim-fade-up delay-1 border border-[#1e1b17] bg-[#0f0d0b] rounded-sm p-8">
+          <p className="label-caps mb-1">Administración</p>
+          <h2 className="font-serif text-2xl text-[#e8e2d9] mb-6">Iniciar sesión</h2>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm text-gray-400 mb-1.5">Email</label>
+              <label className="label-caps block mb-2">Email</label>
               <input
                 type="email"
                 value={email}
@@ -42,12 +50,12 @@ export default function LoginPage({ onLogin, error }) {
                 placeholder="admin@distrito44.com"
                 required
                 autoComplete="email"
-                className="w-full bg-[#111111] border border-[#3a3a3a] rounded-xl px-4 py-3 text-white placeholder-gray-700 focus:outline-none focus:border-[#ff6600] transition-colors"
+                className={inputClass}
               />
             </div>
 
             <div>
-              <label className="block text-sm text-gray-400 mb-1.5">Contraseña</label>
+              <label className="label-caps block mb-2">Contraseña</label>
               <input
                 type="password"
                 value={password}
@@ -55,31 +63,30 @@ export default function LoginPage({ onLogin, error }) {
                 placeholder="••••••••"
                 required
                 autoComplete="current-password"
-                className="w-full bg-[#111111] border border-[#3a3a3a] rounded-xl px-4 py-3 text-white placeholder-gray-700 focus:outline-none focus:border-[#ff6600] transition-colors"
+                className={inputClass}
               />
             </div>
 
             {error && (
-              <div className="bg-red-950/40 border border-red-900/50 rounded-xl px-4 py-3">
-                <p className="text-red-400 text-sm">{error}</p>
+              <div className="border border-red-900/40 bg-red-950/20 rounded-sm px-4 py-3">
+                <p className="text-red-500 text-sm font-light">{error}</p>
               </div>
             )}
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#ff6600] text-black font-semibold py-3 rounded-xl hover:bg-[#ff7a1a] transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer mt-2"
+              className="w-full btn-brand label-caps py-3 rounded-sm disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer mt-2"
             >
-              {loading ? 'Ingresando…' : 'Ingresar'}
+              {loading ? 'Verificando...' : 'Ingresar'}
             </button>
           </form>
         </div>
 
-        <p className="text-center text-gray-700 text-xs mt-6">
-          Acceso solo para administradores
+        <p className="text-center label-caps mt-6" style={{ color: '#2a2520' }}>
+          Solo para administradores
         </p>
       </div>
     </div>
   )
 }
-

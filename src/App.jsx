@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { useMenuData } from './hooks/useMenuData'
 import { useAuth }     from './hooks/useAuth'
 import MenuPage        from './components/Menu/MenuPage'
@@ -6,18 +6,27 @@ import AdminPanel      from './components/Admin/AdminPanel'
 import LoginPage       from './components/Auth/LoginPage'
 import './index.css'
 
+function LoadingScreen({ label }) {
+  return (
+    <div className="min-h-screen bg-[#0c0b09] flex items-center justify-center">
+      <div className="text-center">
+        <img src="/logo-clean.svg" alt="Distrito 44" className="h-14 w-auto mx-auto mb-6 opacity-40" />
+        <div className="flex justify-center mb-3">
+          <div className="w-5 h-5 border border-[#ff6600]/40 border-t-[#ff6600] rounded-full animate-spin" />
+        </div>
+        <p className="label-caps">{label}</p>
+      </div>
+    </div>
+  )
+}
+
 export default function App() {
-  const [view, setView]         = useState('menu') // 'menu' | 'admin' | 'login'
+  const [view, setView] = useState('menu')
   const { user, loading: authLoading, error: authError, signIn, signOut } = useAuth()
   const menuData = useMenuData()
 
-  // ── Ir al panel admin ─────────────────────────────────────────────────────
   function handleAdminClick() {
-    if (user) {
-      setView('admin')
-    } else {
-      setView('login')
-    }
+    setView(user ? 'admin' : 'login')
   }
 
   async function handleLogin(email, password) {
@@ -30,38 +39,16 @@ export default function App() {
     setView('menu')
   }
 
-  // ── Loading auth ──────────────────────────────────────────────────────────
-  if (authLoading) {
-    return (
-      <div className="min-h-screen bg-[#111111] flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-8 h-8 border-2 border-[#ff6600] border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
-          <p className="text-gray-600 text-sm">Cargando…</p>
-        </div>
-      </div>
-    )
-  }
+  if (authLoading)    return <LoadingScreen label="Verificando sesión" />
+  if (menuData.loading) return <LoadingScreen label="Cargando menú" />
 
-  // ── Loading menu data ─────────────────────────────────────────────────────
-  if (menuData.loading) {
-    return (
-      <div className="min-h-screen bg-[#111111] flex items-center justify-center">
-        <div className="text-center">
-          <p className="font-display text-4xl text-[#ff6600] mb-3">Distrito 44</p>
-          <div className="w-6 h-6 border-2 border-[#ff6600] border-t-transparent rounded-full animate-spin mx-auto"></div>
-        </div>
-      </div>
-    )
-  }
-
-  // ── Login page ────────────────────────────────────────────────────────────
   if (view === 'login') {
     return (
       <div className="relative">
         <LoginPage onLogin={handleLogin} error={authError} />
         <button
           onClick={() => setView('menu')}
-          className="fixed top-4 left-4 text-sm text-gray-600 hover:text-gray-300 transition-colors cursor-pointer flex items-center gap-1"
+          className="fixed top-5 left-5 label-caps text-[#3a342e] hover:text-[#e8e2d9] transition-colors cursor-pointer flex items-center gap-2"
         >
           ← Volver al menú
         </button>
@@ -69,12 +56,8 @@ export default function App() {
     )
   }
 
-  // ── Admin panel (protegido) ───────────────────────────────────────────────
   if (view === 'admin') {
-    if (!user) {
-      setView('login')
-      return null
-    }
+    if (!user) { setView('login'); return null }
     return (
       <div className="relative">
         <AdminPanel
@@ -85,27 +68,23 @@ export default function App() {
         />
         <button
           onClick={() => setView('menu')}
-          className="fab fixed bottom-6 right-6 flex items-center gap-2 bg-white text-black font-semibold px-5 py-3 rounded-full shadow-xl cursor-pointer text-sm z-50"
+          className="fab fixed bottom-6 right-6 label-caps border border-[#2a2520] bg-[#0f0d0b] text-[#8a7e74] hover:text-[#e8e2d9] hover:border-[#3a342e] px-5 py-3 rounded-sm shadow-xl cursor-pointer z-50"
         >
-          👁️ Ver menú
+          Ver menú
         </button>
       </div>
     )
   }
 
-  // ── Menú público ──────────────────────────────────────────────────────────
   return (
     <div className="relative">
       <MenuPage categories={menuData.categories} items={menuData.items} />
-
-      {/* FAB — solo visible para admin o para ir a login */}
       <button
         onClick={handleAdminClick}
-        className="fab fixed bottom-6 right-6 flex items-center gap-2 bg-[#ff6600] text-black font-semibold px-5 py-3 rounded-full shadow-xl cursor-pointer text-sm z-50"
+        className="fab fixed bottom-6 right-6 btn-brand label-caps px-5 py-3 rounded-sm shadow-xl cursor-pointer z-50"
       >
-        {user ? '⚙️ Administrar' : '🔐 Admin'}
+        {user ? 'Administrar' : 'Admin'}
       </button>
     </div>
   )
 }
-

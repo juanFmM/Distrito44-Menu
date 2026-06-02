@@ -1,68 +1,49 @@
-﻿import { useState } from 'react';
-
-const EMOJIS = ['🍔', '🍟', '🥩', '🌮', '🧀', '🍗', '🥖', '🍕', '🥗', '🍺', '🥤', '🧃', '☕', '🍓', '🍫', '🍰'];
+import { useState } from 'react'
 
 export default function CategoryForm({ onSave, onCancel, initial = {} }) {
   const [form, setForm] = useState({
-    name: initial.name || '',
-    emoji: initial.emoji || '🍔',
+    name:        initial.name        || '',
+    emoji:       initial.emoji       || '—',   // mantenemos el campo pero sin mostrarlo
     description: initial.description || '',
-  });
+  })
 
   function set(field, value) {
-    setForm((prev) => ({ ...prev, [field]: value }));
+    setForm((prev) => ({ ...prev, [field]: value }))
   }
 
   function handleSubmit(e) {
-    e.preventDefault();
-    if (!form.name.trim()) return;
-    onSave(form);
+    e.preventDefault()
+    if (!form.name.trim()) return
+    onSave(form)
   }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="block text-sm text-gray-400 mb-1">Nombre de categoría *</label>
+        <label className="label-caps block mb-2">Nombre de la sección *</label>
         <input
           value={form.name}
           onChange={(e) => set('name', e.target.value)}
-          placeholder="Ej: Bebidas"
+          placeholder="Ej: Bebidas artesanales"
           required
-          className="w-full bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-[#ff6600]"
+          className="w-full bg-[#0c0b09] border border-[#2a2520] rounded-sm px-4 py-3 text-[#e8e2d9] placeholder-[#3a342e] focus:outline-none focus:border-[#ff6600] text-sm transition-colors"
         />
       </div>
 
       <div>
-        <label className="block text-sm text-gray-400 mb-2">Ícono</label>
-        <div className="flex flex-wrap gap-2">
-          {EMOJIS.map((em) => (
-            <button
-              type="button"
-              key={em}
-              onClick={() => set('emoji', em)}
-              className={`text-xl w-10 h-10 rounded-lg flex items-center justify-center transition-colors cursor-pointer
-                ${form.emoji === em ? 'bg-[#ff6600]' : 'bg-[#2a2a2a] hover:bg-[#3a3a3a]'}`}
-            >
-              {em}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div>
-        <label className="block text-sm text-gray-400 mb-1">Descripción (opcional)</label>
+        <label className="label-caps block mb-2">Descripción breve</label>
         <input
           value={form.description}
           onChange={(e) => set('description', e.target.value)}
-          placeholder="Ej: Refrescos, jugos y más"
-          className="w-full bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-[#ff6600]"
+          placeholder="Ej: Elaboradas con ingredientes locales"
+          className="w-full bg-[#0c0b09] border border-[#2a2520] rounded-sm px-4 py-3 text-[#e8e2d9] placeholder-[#3a342e] focus:outline-none focus:border-[#ff6600] text-sm transition-colors"
         />
       </div>
 
       <div className="flex gap-3 pt-2">
         <button
           type="submit"
-          className="flex-1 bg-[#ff6600] text-black font-semibold py-2.5 rounded-xl hover:bg-[#ff7a1a] transition-colors cursor-pointer"
+          className="flex-1 btn-brand label-caps py-3 rounded-sm cursor-pointer"
         >
           Guardar
         </button>
@@ -70,13 +51,12 @@ export default function CategoryForm({ onSave, onCancel, initial = {} }) {
           <button
             type="button"
             onClick={onCancel}
-            className="flex-1 bg-[#2a2a2a] text-gray-300 py-2.5 rounded-xl hover:bg-[#3a3a3a] transition-colors cursor-pointer"
+            className="flex-1 border border-[#2a2520] text-[#5a5248] label-caps py-3 rounded-sm hover:text-[#e8e2d9] hover:border-[#3a342e] cursor-pointer transition-colors"
           >
             Cancelar
           </button>
         )}
       </div>
     </form>
-  );
+  )
 }
-

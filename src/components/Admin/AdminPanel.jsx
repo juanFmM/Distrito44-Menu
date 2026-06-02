@@ -1,7 +1,13 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import CategoryForm from './CategoryForm'
 import ItemForm from './ItemForm'
 import Dashboard from './Dashboard'
+
+const TABS = [
+  { key: 'dashboard',  label: 'Dashboard' },
+  { key: 'items',      label: 'Platos' },
+  { key: 'categories', label: 'Categorías' },
+]
 
 export default function AdminPanel({
   categories, items,
@@ -10,13 +16,13 @@ export default function AdminPanel({
   resetToDefault, uploadImage,
   user, onSignOut, usingSupabase,
 }) {
-  const [tab, setTab]               = useState('dashboard')
-  const [editingCat, setEditingCat] = useState(null)
+  const [tab, setTab]                 = useState('dashboard')
+  const [editingCat, setEditingCat]   = useState(null)
   const [editingItem, setEditingItem] = useState(null)
-  const [showNewCat, setShowNewCat] = useState(false)
+  const [showNewCat, setShowNewCat]   = useState(false)
   const [showNewItem, setShowNewItem] = useState(false)
   const [confirmReset, setConfirmReset] = useState(false)
-  const [filterCat, setFilterCat]   = useState('all')
+  const [filterCat, setFilterCat]     = useState('all')
   const [actionError, setActionError] = useState(null)
 
   async function safe(fn) {
@@ -25,8 +31,8 @@ export default function AdminPanel({
     catch (err) { setActionError(err.message) }
   }
 
-  function getCategoryEmoji(id) {
-    return categories.find((c) => c.id === id)?.emoji || ''
+  function getCategoryName(id) {
+    return categories.find((c) => c.id === id)?.name || '—'
   }
 
   const filteredItems = filterCat === 'all'
@@ -34,37 +40,36 @@ export default function AdminPanel({
     : items.filter((i) => (i.categoryId || i.category_id) === filterCat)
 
   return (
-    <div className="min-h-screen bg-[#0d0d0d]">
-      {/* Header */}
-      <header className="bg-[#111111] border-b border-[#2e2e2e] px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <img src="/logo-clean.svg" alt="Distrito 44" className="h-9 w-auto opacity-90" />
-          <div className="w-px h-6 bg-[#2e2e2e]" />
-          <div>
-            <h1 className="font-display text-xl text-white leading-none">Panel de Admin</h1>
-            <p className="text-gray-600 text-xs">Garden Food Truck</p>
-          </div>
+    <div className="min-h-screen bg-[#0c0b09]">
+
+      {/* ── Header ───────────────────────────────────────────────────────── */}
+      <header className="border-b border-[#1e1b17] px-6 py-4 flex items-center justify-between"
+        style={{ background: 'rgba(12,11,9,0.96)' }}>
+        <div className="flex items-center gap-4">
+          <img src="/logo-clean.svg" alt="Distrito 44" className="h-8 w-auto opacity-80" />
+          <div className="w-px h-5 bg-[#2a2520]" />
+          <p className="label-caps" style={{ color: '#4a4440' }}>Panel de administración</p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           {usingSupabase && (
-            <span className="hidden sm:flex items-center gap-1.5 text-xs text-green-500 bg-green-950/30 border border-green-900/30 px-2.5 py-1 rounded-full">
-              <span className="w-1.5 h-1.5 bg-green-500 rounded-full inline-block"></span>
+            <span className="hidden sm:flex items-center gap-1.5 label-caps text-green-600 border border-green-900/40 px-2.5 py-1 rounded-sm">
+              <span className="w-1.5 h-1.5 bg-green-600 rounded-full" />
               Supabase
             </span>
           )}
-          <span className="text-xs text-gray-600 hidden sm:block">
-            {categories.length} cat · {items.length} platos
+          <span className="hidden sm:block label-caps" style={{ color: '#3a342e' }}>
+            {categories.length} secciones · {items.length} platos
           </span>
           <button
             onClick={() => setConfirmReset(true)}
-            className="text-xs text-gray-600 hover:text-red-400 transition-colors cursor-pointer px-3 py-1.5 rounded-lg border border-[#2e2e2e] hover:border-red-900"
+            className="label-caps text-[#3a342e] hover:text-red-500 transition-colors cursor-pointer px-3 py-1.5 border border-[#1e1b17] hover:border-red-900/50 rounded-sm"
           >
             Restaurar
           </button>
           <button
             onClick={onSignOut}
-            className="text-xs text-gray-500 hover:text-white transition-colors cursor-pointer px-3 py-1.5 rounded-lg border border-[#2e2e2e]"
+            className="label-caps text-[#3a342e] hover:text-[#e8e2d9] transition-colors cursor-pointer px-3 py-1.5 border border-[#1e1b17] rounded-sm"
             title={user?.email}
           >
             Salir
@@ -72,79 +77,76 @@ export default function AdminPanel({
         </div>
       </header>
 
-      {/* User info banner */}
+      {/* Session bar */}
       {user && (
-        <div className="bg-[#1a1a1a] border-b border-[#2e2e2e] px-6 py-2 flex items-center gap-2">
-          <div className="w-2 h-2 bg-[#ff6600] rounded-full"></div>
-          <p className="text-xs text-gray-500">
-            Sesión como <span className="text-gray-300">{user.email}</span>
+        <div className="border-b border-[#1a1714] px-6 py-2 flex items-center gap-2"
+          style={{ background: 'rgba(255,102,0,0.03)' }}>
+          <span className="w-1.5 h-1.5 rounded-full bg-[#ff6600]" />
+          <p className="label-caps">
+            Sesión activa — <span className="text-[#8a7e74]">{user.email}</span>
           </p>
         </div>
       )}
 
-      {/* Tabs */}
-      <div className="border-b border-[#2e2e2e] px-6">
-        <div className="flex gap-1 max-w-4xl mx-auto">
-          {[
-            { key: 'dashboard',  label: '📊 Dashboard' },
-            { key: 'items',      label: '🍔 Platos' },
-            { key: 'categories', label: '📂 Categorías' },
-          ].map(({ key, label }) => (
+      {/* ── Tabs ─────────────────────────────────────────────────────────── */}
+      <div className="border-b border-[#1e1b17] px-6">
+        <div className="flex max-w-4xl mx-auto">
+          {TABS.map(({ key, label }) => (
             <button
               key={key}
               onClick={() => setTab(key)}
-              className={`px-5 py-3 text-sm font-medium transition-all cursor-pointer border-b-2 -mb-px
-                ${tab === key ? 'text-[#ff6600] border-[#ff6600]' : 'text-gray-500 border-transparent hover:text-gray-300'}`}
+              className={`relative px-6 py-4 label-caps cursor-pointer transition-colors
+                ${tab === key ? 'text-[#ff6600]' : 'text-[#4a4440] hover:text-[#8a7e74]'}`}
             >
               {label}
+              {tab === key && (
+                <span className="absolute bottom-0 left-0 right-0 h-px bg-[#ff6600]" />
+              )}
             </button>
           ))}
         </div>
       </div>
 
+      {/* ── Content ──────────────────────────────────────────────────────── */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
 
-        {/* Error global */}
         {actionError && (
-          <div className="bg-red-950/40 border border-red-900/50 rounded-xl px-4 py-3 mb-5 flex justify-between items-center">
+          <div className="border border-red-900/50 bg-red-950/20 rounded-sm px-4 py-3 mb-6 flex justify-between items-center">
             <p className="text-red-400 text-sm">{actionError}</p>
-            <button onClick={() => setActionError(null)} className="text-red-600 hover:text-red-400 cursor-pointer text-lg leading-none">×</button>
+            <button onClick={() => setActionError(null)} className="text-red-700 hover:text-red-400 cursor-pointer ml-4">×</button>
           </div>
         )}
 
-        {/* ── DASHBOARD TAB ── */}
+        {/* Dashboard */}
         {tab === 'dashboard' && (
-          <Dashboard
-            categories={categories}
-            items={items}
-            updateItem={updateItem}
-          />
+          <Dashboard categories={categories} items={items} updateItem={updateItem} />
         )}
 
-        {/* ── ITEMS TAB ── */}
+        {/* Platos */}
         {tab === 'items' && (
           <div>
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
               <div>
-                <h2 className="text-white font-semibold text-lg">Platos del menú</h2>
-                <p className="text-gray-600 text-sm">Gestiona todos los ítems.</p>
+                <p className="label-caps mb-1">Gestión</p>
+                <h2 className="font-serif text-2xl text-[#e8e2d9]">Platos del menú</h2>
               </div>
               <button
                 onClick={() => setShowNewItem(true)}
-                className="bg-[#ff6600] text-black font-semibold px-5 py-2.5 rounded-xl hover:bg-[#ff7a1a] transition-colors cursor-pointer text-sm whitespace-nowrap"
+                className="btn-brand label-caps px-5 py-2.5 rounded-sm cursor-pointer"
               >
                 + Agregar plato
               </button>
             </div>
 
-            {/* Filtro por categoría */}
-            <div className="flex gap-2 mb-5 overflow-x-auto pb-1">
+            {/* Filtros */}
+            <div className="flex gap-0 mb-6 overflow-x-auto border-b border-[#1e1b17] [&::-webkit-scrollbar]:hidden">
               <button
                 onClick={() => setFilterCat('all')}
-                className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors cursor-pointer
-                  ${filterCat === 'all' ? 'bg-[#ff6600] text-black border-[#ff6600]' : 'border-[#2e2e2e] text-gray-400 hover:border-[#ff6600]'}`}
+                className={`relative flex-shrink-0 px-4 py-3 label-caps cursor-pointer transition-colors
+                  ${filterCat === 'all' ? 'text-[#ff6600]' : 'text-[#4a4440] hover:text-[#8a7e74]'}`}
               >
                 Todos ({items.length})
+                {filterCat === 'all' && <span className="absolute bottom-0 left-0 right-0 h-px bg-[#ff6600]" />}
               </button>
               {categories.map((cat) => {
                 const count = items.filter((i) => (i.categoryId || i.category_id) === cat.id).length
@@ -152,19 +154,20 @@ export default function AdminPanel({
                   <button
                     key={cat.id}
                     onClick={() => setFilterCat(cat.id)}
-                    className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors cursor-pointer
-                      ${filterCat === cat.id ? 'bg-[#ff6600] text-black border-[#ff6600]' : 'border-[#2e2e2e] text-gray-400 hover:border-[#ff6600]'}`}
+                    className={`relative flex-shrink-0 px-4 py-3 label-caps cursor-pointer transition-colors
+                      ${filterCat === cat.id ? 'text-[#ff6600]' : 'text-[#4a4440] hover:text-[#8a7e74]'}`}
                   >
-                    {cat.emoji} {cat.name} ({count})
+                    {cat.name} ({count})
+                    {filterCat === cat.id && <span className="absolute bottom-0 left-0 right-0 h-px bg-[#ff6600]" />}
                   </button>
                 )
               })}
             </div>
 
-            {/* Formulario nuevo ítem */}
+            {/* Formulario nuevo */}
             {showNewItem && (
-              <div className="bg-[#1a1a1a] border border-[#ff6600]/30 rounded-2xl p-5 mb-5">
-                <h3 className="text-white font-semibold mb-4">Nuevo plato</h3>
+              <div className="border border-[#ff6600]/20 bg-[#111009] rounded-sm p-6 mb-6">
+                <p className="label-caps mb-4">Nuevo plato</p>
                 <ItemForm
                   categories={categories}
                   uploadImage={uploadImage}
@@ -174,13 +177,12 @@ export default function AdminPanel({
               </div>
             )}
 
-            {/* Lista */}
-            <div className="space-y-2">
+            <div className="space-y-1">
               {filteredItems.map((item) => (
                 <div key={item.id}>
                   {editingItem === item.id ? (
-                    <div className="bg-[#1a1a1a] border border-[#ff6600]/30 rounded-2xl p-5">
-                      <h3 className="text-white font-semibold mb-4">Editar plato</h3>
+                    <div className="border border-[#ff6600]/20 bg-[#111009] rounded-sm p-6 mb-2">
+                      <p className="label-caps mb-4">Editar plato</p>
                       <ItemForm
                         categories={categories}
                         uploadImage={uploadImage}
@@ -190,63 +192,63 @@ export default function AdminPanel({
                       />
                     </div>
                   ) : (
-                    <div className="bg-[#1a1a1a] border border-[#2e2e2e] rounded-xl px-4 py-3 flex items-center gap-3">
+                    <div className="border border-[#1a1714] hover:border-[#2a2520] bg-[#0f0d0b] rounded-sm px-4 py-3 flex items-center gap-3 transition-colors group">
                       {(item.imageUrl || item.image_url) && (
                         <img
                           src={item.imageUrl || item.image_url}
                           alt={item.name}
-                          className="w-12 h-12 object-cover rounded-lg flex-shrink-0"
+                          className="w-11 h-11 object-cover rounded-sm flex-shrink-0 opacity-80 group-hover:opacity-100 transition-opacity"
                         />
                       )}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
-                          <span className="text-sm text-[#ff6600]">{getCategoryEmoji(item.categoryId || item.category_id)}</span>
-                          <span className="text-white font-medium text-sm truncate">{item.name}</span>
-                          {item.badge && <span className="text-xs text-gray-500 hidden sm:block">{item.badge}</span>}
+                          <span className="text-[#e8e2d9] text-sm font-medium truncate">{item.name}</span>
+                          <span className="label-caps text-[#3a342e] hidden sm:block">
+                            {getCategoryName(item.categoryId || item.category_id)}
+                          </span>
                         </div>
-                        <p className="text-gray-600 text-xs mt-0.5 truncate">{item.description}</p>
+                        <p className="text-[#4a4440] text-xs mt-0.5 truncate font-light">{item.description}</p>
                       </div>
-                      <div className="flex items-center gap-3 flex-shrink-0">
+                      <div className="flex items-center gap-4 flex-shrink-0">
                         {item.price
-                          ? <span className="text-[#ff6600] font-semibold text-sm">${item.price}</span>
-                          : <span className="text-gray-600 text-xs">S/P</span>
+                          ? <span className="font-display text-[#ff6600] text-xl">${item.price}</span>
+                          : <span className="label-caps text-[#3a342e]">S/P</span>
                         }
-                        <button onClick={() => setEditingItem(item.id)} className="text-gray-500 hover:text-white transition-colors cursor-pointer text-sm px-1">✏️</button>
-                        <button onClick={() => safe(() => deleteItem(item.id))} className="text-gray-600 hover:text-red-400 transition-colors cursor-pointer text-sm px-1">🗑️</button>
+                        <button onClick={() => setEditingItem(item.id)} className="label-caps text-[#3a342e] hover:text-[#e8e2d9] cursor-pointer transition-colors px-1">Editar</button>
+                        <button onClick={() => safe(() => deleteItem(item.id))} className="label-caps text-[#3a342e] hover:text-red-500 cursor-pointer transition-colors px-1">Borrar</button>
                       </div>
                     </div>
                   )}
                 </div>
               ))}
               {filteredItems.length === 0 && (
-                <div className="text-center py-12 text-gray-600">
-                  <p className="text-3xl mb-2">🍽️</p>
-                  <p>No hay platos en esta categoría.</p>
+                <div className="text-center py-16">
+                  <p className="font-serif italic text-[#3a342e] text-lg">Sin platos en esta sección</p>
                 </div>
               )}
             </div>
           </div>
         )}
 
-        {/* ── CATEGORIES TAB ── */}
+        {/* Categorías */}
         {tab === 'categories' && (
           <div>
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
               <div>
-                <h2 className="text-white font-semibold text-lg">Categorías</h2>
-                <p className="text-gray-600 text-sm">Organiza el menú en secciones.</p>
+                <p className="label-caps mb-1">Gestión</p>
+                <h2 className="font-serif text-2xl text-[#e8e2d9]">Secciones del menú</h2>
               </div>
               <button
                 onClick={() => setShowNewCat(true)}
-                className="bg-[#ff6600] text-black font-semibold px-5 py-2.5 rounded-xl hover:bg-[#ff7a1a] transition-colors cursor-pointer text-sm whitespace-nowrap"
+                className="btn-brand label-caps px-5 py-2.5 rounded-sm cursor-pointer"
               >
-                + Nueva categoría
+                + Nueva sección
               </button>
             </div>
 
             {showNewCat && (
-              <div className="bg-[#1a1a1a] border border-[#ff6600]/30 rounded-2xl p-5 mb-5">
-                <h3 className="text-white font-semibold mb-4">Nueva categoría</h3>
+              <div className="border border-[#ff6600]/20 bg-[#111009] rounded-sm p-6 mb-6">
+                <p className="label-caps mb-4">Nueva categoría</p>
                 <CategoryForm
                   onSave={(data) => safe(() => addCategory(data)).then(() => setShowNewCat(false))}
                   onCancel={() => setShowNewCat(false)}
@@ -254,14 +256,14 @@ export default function AdminPanel({
               </div>
             )}
 
-            <div className="space-y-2">
+            <div className="space-y-1">
               {categories.map((cat) => {
                 const count = items.filter((i) => (i.categoryId || i.category_id) === cat.id).length
                 return (
                   <div key={cat.id}>
                     {editingCat === cat.id ? (
-                      <div className="bg-[#1a1a1a] border border-[#ff6600]/30 rounded-2xl p-5">
-                        <h3 className="text-white font-semibold mb-4">Editar categoría</h3>
+                      <div className="border border-[#ff6600]/20 bg-[#111009] rounded-sm p-6 mb-2">
+                        <p className="label-caps mb-4">Editar categoría</p>
                         <CategoryForm
                           initial={cat}
                           onSave={(data) => safe(() => updateCategory(cat.id, data)).then(() => setEditingCat(null))}
@@ -269,23 +271,23 @@ export default function AdminPanel({
                         />
                       </div>
                     ) : (
-                      <div className="bg-[#1a1a1a] border border-[#2e2e2e] rounded-xl px-4 py-3 flex items-center gap-3">
-                        <span className="text-2xl">{cat.emoji}</span>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-white font-medium text-sm">{cat.name}</p>
-                          <p className="text-gray-600 text-xs">{cat.description || '—'} · {count} platos</p>
+                      <div className="border border-[#1a1714] hover:border-[#2a2520] bg-[#0f0d0b] rounded-sm px-4 py-3 flex items-center justify-between transition-colors group">
+                        <div>
+                          <p className="text-[#e8e2d9] font-medium text-sm">{cat.name}</p>
+                          <p className="label-caps text-[#3a342e] mt-0.5">{cat.description || '—'} · {count} platos</p>
                         </div>
-                        <button onClick={() => setEditingCat(cat.id)} className="text-gray-500 hover:text-white transition-colors cursor-pointer text-sm px-1">✏️</button>
-                        <button onClick={() => safe(() => deleteCategory(cat.id))} className="text-gray-600 hover:text-red-400 transition-colors cursor-pointer text-sm px-1">🗑️</button>
+                        <div className="flex gap-4">
+                          <button onClick={() => setEditingCat(cat.id)} className="label-caps text-[#3a342e] hover:text-[#e8e2d9] cursor-pointer transition-colors">Editar</button>
+                          <button onClick={() => safe(() => deleteCategory(cat.id))} className="label-caps text-[#3a342e] hover:text-red-500 cursor-pointer transition-colors">Borrar</button>
+                        </div>
                       </div>
                     )}
                   </div>
                 )
               })}
               {categories.length === 0 && (
-                <div className="text-center py-12 text-gray-600">
-                  <p className="text-3xl mb-2">📂</p>
-                  <p>No hay categorías creadas.</p>
+                <div className="text-center py-16">
+                  <p className="font-serif italic text-[#3a342e] text-lg">Sin secciones creadas</p>
                 </div>
               )}
             </div>
@@ -295,22 +297,23 @@ export default function AdminPanel({
 
       {/* Modal reset */}
       {confirmReset && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 px-4">
-          <div className="bg-[#1a1a1a] border border-[#3a3a3a] rounded-2xl p-6 max-w-sm w-full">
-            <h3 className="text-white font-semibold text-lg mb-2">¿Restaurar menú?</h3>
-            <p className="text-gray-400 text-sm mb-6">
-              Esto borrará todos los cambios y restaurará el menú original de Distrito 44.
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-4">
+          <div className="bg-[#111009] border border-[#2a2520] rounded-sm p-8 max-w-sm w-full">
+            <p className="label-caps mb-2">Confirmar acción</p>
+            <h3 className="font-serif text-xl text-[#e8e2d9] mb-3">¿Restaurar el menú original?</h3>
+            <p className="text-[#5a5248] text-sm mb-6 font-light">
+              Se eliminarán todos los cambios y se restaurará el menú original de Distrito 44.
             </p>
             <div className="flex gap-3">
               <button
                 onClick={() => safe(resetToDefault).then(() => setConfirmReset(false))}
-                className="flex-1 bg-red-600 text-white font-semibold py-2.5 rounded-xl hover:bg-red-500 transition-colors cursor-pointer"
+                className="flex-1 bg-red-700 hover:bg-red-600 text-white label-caps py-3 rounded-sm cursor-pointer transition-colors"
               >
                 Restaurar
               </button>
               <button
                 onClick={() => setConfirmReset(false)}
-                className="flex-1 bg-[#2a2a2a] text-gray-300 py-2.5 rounded-xl hover:bg-[#3a3a3a] transition-colors cursor-pointer"
+                className="flex-1 border border-[#2a2520] text-[#5a5248] label-caps py-3 rounded-sm hover:text-[#e8e2d9] hover:border-[#3a342e] cursor-pointer transition-colors"
               >
                 Cancelar
               </button>
@@ -321,4 +324,3 @@ export default function AdminPanel({
     </div>
   )
 }
-

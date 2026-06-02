@@ -1,6 +1,6 @@
-﻿import { useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 
-const BADGES = ['', '⭐ Popular', '🔥 Especial', '🌶️ Picante', '🍗 Combo', '🇦🇷 Clásica', '🍫 Personalizable', '🆕 Nuevo']
+const BADGES = ['', 'Popular', 'Especial', 'Picante', 'Combo', 'Clásica', 'Personalizable', 'Nuevo']
 
 export default function ItemForm({ categories, onSave, onCancel, initial = {}, uploadImage }) {
   const [form, setForm] = useState({
@@ -8,11 +8,16 @@ export default function ItemForm({ categories, onSave, onCancel, initial = {}, u
     name:        initial.name        || '',
     description: initial.description || '',
     price:       initial.price       || '',
-    badge:       initial.badge       || '',
-    imageUrl:    initial.imageUrl    || initial.image_url || '',
+    badge:       cleanBadge(initial.badge) || '',
+    imageUrl:    initial.imageUrl    || initial.image_url   || '',
   })
   const [uploading, setUploading] = useState(false)
   const fileRef = useRef()
+
+  function cleanBadge(b) {
+    if (!b) return ''
+    return b.replace(/[\u{1F300}-\u{1FFFF}\u{2600}-\u{27BF}]/gu, '').trim()
+  }
 
   function set(field, value) {
     setForm((prev) => ({ ...prev, [field]: value }))
@@ -32,83 +37,86 @@ export default function ItemForm({ categories, onSave, onCancel, initial = {}, u
     }
   }
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault()
     if (!form.name.trim() || !form.categoryId) return
     onSave({ ...form, price: form.price ? Number(form.price) : null })
   }
 
+  const inputClass = "w-full bg-[#0c0b09] border border-[#2a2520] rounded-sm px-4 py-3 text-[#e8e2d9] placeholder-[#3a342e] focus:outline-none focus:border-[#ff6600] text-sm transition-colors"
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="block text-sm text-gray-400 mb-1">Categoría *</label>
+        <label className="label-caps block mb-2">Sección *</label>
         <select
           value={form.categoryId}
           onChange={(e) => set('categoryId', e.target.value)}
           required
-          className="w-full bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-[#ff6600]"
+          className={inputClass}
         >
           {categories.map((cat) => (
-            <option key={cat.id} value={cat.id}>{cat.emoji} {cat.name}</option>
+            <option key={cat.id} value={cat.id}>{cat.name}</option>
           ))}
         </select>
       </div>
 
       <div>
-        <label className="block text-sm text-gray-400 mb-1">Nombre del plato *</label>
+        <label className="label-caps block mb-2">Nombre del plato *</label>
         <input
           value={form.name}
           onChange={(e) => set('name', e.target.value)}
-          placeholder="Ej: BBQ Burger"
+          placeholder="Ej: Pulled Pork Fries"
           required
-          className="w-full bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-[#ff6600]"
+          className={inputClass}
         />
       </div>
 
       <div>
-        <label className="block text-sm text-gray-400 mb-1">Descripción</label>
+        <label className="label-caps block mb-2">Descripción</label>
         <textarea
           value={form.description}
           onChange={(e) => set('description', e.target.value)}
-          placeholder="Ingredientes y detalles..."
+          placeholder="Ingredientes, preparación, características..."
           rows={3}
-          className="w-full bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-[#ff6600] resize-none"
+          className={`${inputClass} resize-none`}
         />
       </div>
 
-      <div className="flex gap-3">
-        <div className="flex-1">
-          <label className="block text-sm text-gray-400 mb-1">Precio ($)</label>
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <label className="label-caps block mb-2">Precio ($)</label>
           <input
             type="number"
             value={form.price}
             onChange={(e) => set('price', e.target.value)}
             placeholder="750"
             min={0}
-            className="w-full bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-[#ff6600]"
+            className={inputClass}
           />
         </div>
-        <div className="flex-1">
-          <label className="block text-sm text-gray-400 mb-1">Badge</label>
+        <div>
+          <label className="label-caps block mb-2">Etiqueta</label>
           <select
             value={form.badge}
             onChange={(e) => set('badge', e.target.value)}
-            className="w-full bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-[#ff6600]"
+            className={inputClass}
           >
-            {BADGES.map((b) => <option key={b} value={b}>{b || '— Sin badge —'}</option>)}
+            {BADGES.map((b) => (
+              <option key={b} value={b}>{b || '— Sin etiqueta —'}</option>
+            ))}
           </select>
         </div>
       </div>
 
-      {/* Imagen */}
       <div>
-        <label className="block text-sm text-gray-400 mb-1">Imagen del plato</label>
-        <div className="flex gap-3 items-start">
+        <label className="label-caps block mb-2">Fotografía</label>
+        <div className="flex gap-2 items-start">
           <input
             value={form.imageUrl}
             onChange={(e) => set('imageUrl', e.target.value)}
-            placeholder="https://... o subí un archivo →"
-            className="flex-1 bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-[#ff6600] text-sm"
+            placeholder="https://... o subir archivo"
+            className={`${inputClass} flex-1`}
           />
           {uploadImage && (
             <>
@@ -116,9 +124,9 @@ export default function ItemForm({ categories, onSave, onCancel, initial = {}, u
                 type="button"
                 onClick={() => fileRef.current?.click()}
                 disabled={uploading}
-                className="bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-3 py-2.5 text-gray-400 hover:text-white hover:border-[#ff6600] transition-colors cursor-pointer text-sm disabled:opacity-50"
+                className="border border-[#2a2520] text-[#5a5248] hover:border-[#ff6600] hover:text-[#ff6600] rounded-sm px-4 py-3 label-caps cursor-pointer transition-colors disabled:opacity-40"
               >
-                {uploading ? '…' : '📁'}
+                {uploading ? '...' : 'Subir'}
               </button>
               <input ref={fileRef} type="file" accept="image/*" onChange={handleImagePick} className="hidden" />
             </>
@@ -128,7 +136,7 @@ export default function ItemForm({ categories, onSave, onCancel, initial = {}, u
           <img
             src={form.imageUrl}
             alt="preview"
-            className="mt-2 h-20 w-32 object-cover rounded-lg border border-[#3a3a3a]"
+            className="mt-2 h-20 w-32 object-cover rounded-sm border border-[#2a2520] opacity-80"
             onError={(e) => { e.target.style.display = 'none' }}
           />
         )}
@@ -137,7 +145,7 @@ export default function ItemForm({ categories, onSave, onCancel, initial = {}, u
       <div className="flex gap-3 pt-2">
         <button
           type="submit"
-          className="flex-1 bg-[#ff6600] text-black font-semibold py-2.5 rounded-xl hover:bg-[#ff7a1a] transition-colors cursor-pointer"
+          className="flex-1 btn-brand label-caps py-3 rounded-sm cursor-pointer"
         >
           Guardar
         </button>
@@ -145,7 +153,7 @@ export default function ItemForm({ categories, onSave, onCancel, initial = {}, u
           <button
             type="button"
             onClick={onCancel}
-            className="flex-1 bg-[#2a2a2a] text-gray-300 py-2.5 rounded-xl hover:bg-[#3a3a3a] transition-colors cursor-pointer"
+            className="flex-1 border border-[#2a2520] text-[#5a5248] label-caps py-3 rounded-sm hover:text-[#e8e2d9] hover:border-[#3a342e] cursor-pointer transition-colors"
           >
             Cancelar
           </button>
@@ -154,4 +162,3 @@ export default function ItemForm({ categories, onSave, onCancel, initial = {}, u
     </form>
   )
 }
-

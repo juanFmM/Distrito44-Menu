@@ -3,7 +3,7 @@
 
 /* ── Keyframes ─────────────────────────────────────────────────────────────── */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(22px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes fadeIn {
@@ -11,11 +11,11 @@
   to   { opacity: 1; }
 }
 @keyframes slideRight {
-  from { opacity: 0; transform: translateX(-16px); }
+  from { opacity: 0; transform: translateX(-18px); }
   to   { opacity: 1; transform: translateX(0); }
 }
 @keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.94); }
+  from { opacity: 0; transform: scale(0.93); }
   to   { opacity: 1; transform: scale(1); }
 }
 @keyframes shimmer {
@@ -29,20 +29,20 @@
   from { width: 0%; }
   to   { width: var(--bar-w); }
 }
-@keyframes countUp {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
+@keyframes pulse-brand {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,102,0,0); }
+  50%       { box-shadow: 0 0 0 7px rgba(255,102,0,0.13); }
 }
-@keyframes pulse-gold {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(212,160,23,0); }
-  50%       { box-shadow: 0 0 0 6px rgba(212,160,23,0.15); }
+@keyframes logoGlow {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(255,102,0,0.3)); }
+  50%       { filter: drop-shadow(0 0 20px rgba(255,102,0,0.6)); }
 }
 
-/* ── Utilities ─────────────────────────────────────────────────────────────── */
+/* ── Base ──────────────────────────────────────────────────────────────────── */
 body {
   font-family: 'Inter', sans-serif;
-  background-color: #111111;
-  color: #f5f5f5;
+  background-color: #0e0e0e;
+  color: #f0f0f0;
   margin: 0;
 }
 #root { min-height: 100vh; }
@@ -54,24 +54,23 @@ body {
 
 /* ── Scrollbar ─────────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar       { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: #1a1a1a; }
-::-webkit-scrollbar-thumb { background: #D4A017; border-radius: 4px; }
+::-webkit-scrollbar-track { background: #181818; }
+::-webkit-scrollbar-thumb { background: #ff6600; border-radius: 4px; }
 
-/* ── Animation classes ─────────────────────────────────────────────────────── */
-.anim-fade-up   { animation: fadeUp    0.45s cubic-bezier(.22,.68,0,1.2) both; }
-.anim-fade-in   { animation: fadeIn    0.35s ease both; }
-.anim-scale-in  { animation: scaleIn   0.3s  cubic-bezier(.22,.68,0,1.2) both; }
-.anim-slide-r   { animation: slideRight 0.35s ease both; }
+/* ── Animation helpers ─────────────────────────────────────────────────────── */
+.anim-fade-up  { animation: fadeUp     0.5s cubic-bezier(.22,.68,0,1.2) both; }
+.anim-fade-in  { animation: fadeIn     0.35s ease both; }
+.anim-scale-in { animation: scaleIn    0.3s  cubic-bezier(.22,.68,0,1.2) both; }
+.anim-slide-r  { animation: slideRight 0.38s ease both; }
 
-/* Stagger delays */
-.delay-0  { animation-delay: 0ms; }
-.delay-1  { animation-delay: 60ms; }
-.delay-2  { animation-delay: 120ms; }
-.delay-3  { animation-delay: 180ms; }
-.delay-4  { animation-delay: 240ms; }
-.delay-5  { animation-delay: 300ms; }
+.delay-0 { animation-delay: 0ms; }
+.delay-1 { animation-delay: 70ms; }
+.delay-2 { animation-delay: 140ms; }
+.delay-3 { animation-delay: 210ms; }
+.delay-4 { animation-delay: 280ms; }
+.delay-5 { animation-delay: 350ms; }
 
-/* ── Skeleton loader ───────────────────────────────────────────────────────── */
+/* ── Skeleton ──────────────────────────────────────────────────────────────── */
 .skeleton {
   background: linear-gradient(90deg, #1e1e1e 25%, #2a2a2a 50%, #1e1e1e 75%);
   background-size: 400px 100%;
@@ -81,74 +80,84 @@ body {
 
 /* ── Menu card ─────────────────────────────────────────────────────────────── */
 .menu-card {
-  transition: transform 0.25s cubic-bezier(.22,.68,0,1.2),
-              box-shadow 0.25s ease,
-              border-color 0.2s ease;
+  transition: transform 0.28s cubic-bezier(.22,.68,0,1.2),
+              box-shadow 0.28s ease, border-color 0.2s ease;
   will-change: transform;
 }
 .menu-card:hover {
-  transform: translateY(-5px) scale(1.01);
-  box-shadow: 0 12px 32px rgba(212,160,23,0.18);
-  border-color: rgba(212,160,23,0.3);
+  transform: translateY(-6px) scale(1.015);
+  box-shadow: 0 14px 36px rgba(255,102,0,0.18);
+  border-color: rgba(255,102,0,0.35);
 }
 
-/* ── Category nav pill ─────────────────────────────────────────────────────── */
+/* ── Category pill ─────────────────────────────────────────────────────────── */
 .cat-pill {
   transition: background 0.2s ease, color 0.2s ease,
               border-color 0.2s ease, transform 0.15s ease;
 }
 .cat-pill:hover  { transform: translateY(-1px); }
 .cat-pill.active {
-  background: #D4A017;
-  color: #111;
-  border-color: #D4A017;
-  animation: pulse-gold 2s infinite;
+  background: #ff6600;
+  color: #fff;
+  border-color: #ff6600;
+  animation: pulse-brand 2.2s infinite;
 }
 
-/* ── FAB button ────────────────────────────────────────────────────────────── */
+/* ── FAB ───────────────────────────────────────────────────────────────────── */
 .fab {
-  transition: transform 0.2s cubic-bezier(.22,.68,0,1.2),
-              box-shadow 0.2s ease, background 0.2s ease;
+  transition: transform 0.22s cubic-bezier(.22,.68,0,1.2),
+              box-shadow 0.22s ease;
 }
-.fab:hover {
-  transform: scale(1.06) translateY(-2px);
-  box-shadow: 0 8px 28px rgba(212,160,23,0.4);
-}
-.fab:active { transform: scale(0.97); }
+.fab:hover  { transform: scale(1.07) translateY(-2px); box-shadow: 0 8px 30px rgba(255,102,0,0.45); }
+.fab:active { transform: scale(0.96); }
 
 /* ── Dashboard bar ─────────────────────────────────────────────────────────── */
 .dash-bar {
   width: var(--bar-w, 0%);
-  animation: barGrow 0.8s cubic-bezier(.22,.68,0,1.2) both;
+  animation: barGrow 0.85s cubic-bezier(.22,.68,0,1.2) both;
 }
 
 /* ── Stat card ─────────────────────────────────────────────────────────────── */
 .stat-card {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
 }
 .stat-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.5);
 }
 
 /* ── Spinner ───────────────────────────────────────────────────────────────── */
 .spinner {
   width: 28px; height: 28px;
-  border: 2.5px solid #2e2e2e;
-  border-top-color: #D4A017;
+  border: 2.5px solid #242424;
+  border-top-color: #ff6600;
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
 }
 
 /* ── Input focus glow ──────────────────────────────────────────────────────── */
 input:focus, select:focus, textarea:focus {
-  box-shadow: 0 0 0 3px rgba(212,160,23,0.12);
+  box-shadow: 0 0 0 3px rgba(255,102,0,0.14);
 }
 
-/* ── Hero gradient text ────────────────────────────────────────────────────── */
+/* ── Hero text gradient ────────────────────────────────────────────────────── */
 .hero-text {
-  background: linear-gradient(135deg, #ffffff 60%, #D4A017 100%);
+  background: linear-gradient(135deg, #ffffff 50%, #ff6600 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+/* ── Logo glow ─────────────────────────────────────────────────────────────── */
+.logo-glow {
+  animation: logoGlow 3s ease-in-out infinite;
+}
+
+/* ── Brand button ──────────────────────────────────────────────────────────── */
+.btn-brand {
+  background: #ff6600;
+  color: #fff;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+.btn-brand:hover  { background: #ff7a1a; transform: translateY(-1px); }
+.btn-brand:active { transform: scale(0.97); }

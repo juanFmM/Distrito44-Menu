@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 
 export default function LoginPage({ onLogin, error }) {
   const [email, setEmail]       = useState('')
@@ -17,16 +17,15 @@ export default function LoginPage({ onLogin, error }) {
 
   return (
     <div className="min-h-screen bg-[#0d0d0d] flex items-center justify-center px-4"
-      style={{ background: 'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(212,160,23,0.08) 0%, #0d0d0d 60%)' }}
+      style={{ background: 'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(255,102,0,0.08) 0%, #0d0d0d 60%)' }}
     >
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="anim-fade-up text-center mb-10">
-          <p className="text-[#D4A017] text-xs font-medium tracking-widest uppercase mb-1">
-            Panel de administración
-          </p>
-          <h1 className="hero-text font-display text-7xl">Distrito 44</h1>
-          <p className="text-gray-600 text-sm mt-1">Garden Food Truck</p>
+          <div className="flex justify-center mb-3">
+            <img src="/logo-clean.svg" alt="Distrito 44" className="logo-glow h-20 w-auto" />
+          </div>
+          <p className="text-gray-600 text-xs tracking-widest uppercase mt-2">Panel de administración</p>
         </div>
 
         {/* Card */}
@@ -43,7 +42,7 @@ export default function LoginPage({ onLogin, error }) {
                 placeholder="admin@distrito44.com"
                 required
                 autoComplete="email"
-                className="w-full bg-[#111111] border border-[#3a3a3a] rounded-xl px-4 py-3 text-white placeholder-gray-700 focus:outline-none focus:border-[#D4A017] transition-colors"
+                className="w-full bg-[#111111] border border-[#3a3a3a] rounded-xl px-4 py-3 text-white placeholder-gray-700 focus:outline-none focus:border-[#ff6600] transition-colors"
               />
             </div>
 
@@ -56,7 +55,7 @@ export default function LoginPage({ onLogin, error }) {
                 placeholder="••••••••"
                 required
                 autoComplete="current-password"
-                className="w-full bg-[#111111] border border-[#3a3a3a] rounded-xl px-4 py-3 text-white placeholder-gray-700 focus:outline-none focus:border-[#D4A017] transition-colors"
+                className="w-full bg-[#111111] border border-[#3a3a3a] rounded-xl px-4 py-3 text-white placeholder-gray-700 focus:outline-none focus:border-[#ff6600] transition-colors"
               />
             </div>
 
@@ -69,7 +68,7 @@ export default function LoginPage({ onLogin, error }) {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#D4A017] text-black font-semibold py-3 rounded-xl hover:bg-[#e6b020] transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer mt-2"
+              className="w-full bg-[#ff6600] text-black font-semibold py-3 rounded-xl hover:bg-[#ff7a1a] transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer mt-2"
             >
               {loading ? 'Ingresando…' : 'Ingresar'}
             </button>
@@ -83,3 +82,4 @@ export default function LoginPage({ onLogin, error }) {
     </div>
   )
 }
+

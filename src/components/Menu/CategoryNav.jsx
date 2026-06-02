@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 
 export default function CategoryNav({ categories }) {
   const [active, setActive] = useState(categories[0]?.id)
@@ -36,8 +36,8 @@ export default function CategoryNav({ categories }) {
               style={{ animationDelay: `${i * 50}ms` }}
               className={`cat-pill anim-fade-in flex-shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium border cursor-pointer
                 ${active === cat.id
-                  ? 'active bg-[#D4A017] text-black border-[#D4A017]'
-                  : 'bg-transparent text-gray-400 border-[#2e2e2e] hover:border-[#D4A017]/50 hover:text-white'
+                  ? 'active bg-[#ff6600] text-black border-[#ff6600]'
+                  : 'bg-transparent text-gray-400 border-[#2e2e2e] hover:border-[#ff6600]/50 hover:text-white'
                 }`}
             >
               <span>{cat.emoji}</span>
@@ -49,3 +49,4 @@ export default function CategoryNav({ categories }) {
     </nav>
   )
 }
+

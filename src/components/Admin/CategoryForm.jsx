@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 
 const EMOJIS = ['🍔', '🍟', '🥩', '🌮', '🧀', '🍗', '🥖', '🍕', '🥗', '🍺', '🥤', '🧃', '☕', '🍓', '🍫', '🍰'];
 
@@ -28,7 +28,7 @@ export default function CategoryForm({ onSave, onCancel, initial = {} }) {
           onChange={(e) => set('name', e.target.value)}
           placeholder="Ej: Bebidas"
           required
-          className="w-full bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-[#D4A017]"
+          className="w-full bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-[#ff6600]"
         />
       </div>
 
@@ -41,7 +41,7 @@ export default function CategoryForm({ onSave, onCancel, initial = {} }) {
               key={em}
               onClick={() => set('emoji', em)}
               className={`text-xl w-10 h-10 rounded-lg flex items-center justify-center transition-colors cursor-pointer
-                ${form.emoji === em ? 'bg-[#D4A017]' : 'bg-[#2a2a2a] hover:bg-[#3a3a3a]'}`}
+                ${form.emoji === em ? 'bg-[#ff6600]' : 'bg-[#2a2a2a] hover:bg-[#3a3a3a]'}`}
             >
               {em}
             </button>
@@ -55,14 +55,14 @@ export default function CategoryForm({ onSave, onCancel, initial = {} }) {
           value={form.description}
           onChange={(e) => set('description', e.target.value)}
           placeholder="Ej: Refrescos, jugos y más"
-          className="w-full bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-[#D4A017]"
+          className="w-full bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-[#ff6600]"
         />
       </div>
 
       <div className="flex gap-3 pt-2">
         <button
           type="submit"
-          className="flex-1 bg-[#D4A017] text-black font-semibold py-2.5 rounded-xl hover:bg-[#e6b020] transition-colors cursor-pointer"
+          className="flex-1 bg-[#ff6600] text-black font-semibold py-2.5 rounded-xl hover:bg-[#ff7a1a] transition-colors cursor-pointer"
         >
           Guardar
         </button>
@@ -79,3 +79,4 @@ export default function CategoryForm({ onSave, onCancel, initial = {} }) {
     </form>
   );
 }
+

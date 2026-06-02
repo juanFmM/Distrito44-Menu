@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+﻿import { useState, useRef } from 'react'
 
 const BADGES = ['', '⭐ Popular', '🔥 Especial', '🌶️ Picante', '🍗 Combo', '🇦🇷 Clásica', '🍫 Personalizable', '🆕 Nuevo']
 
@@ -46,7 +46,7 @@ export default function ItemForm({ categories, onSave, onCancel, initial = {}, u
           value={form.categoryId}
           onChange={(e) => set('categoryId', e.target.value)}
           required
-          className="w-full bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-[#D4A017]"
+          className="w-full bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-[#ff6600]"
         >
           {categories.map((cat) => (
             <option key={cat.id} value={cat.id}>{cat.emoji} {cat.name}</option>
@@ -61,7 +61,7 @@ export default function ItemForm({ categories, onSave, onCancel, initial = {}, u
           onChange={(e) => set('name', e.target.value)}
           placeholder="Ej: BBQ Burger"
           required
-          className="w-full bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-[#D4A017]"
+          className="w-full bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-[#ff6600]"
         />
       </div>
 
@@ -72,7 +72,7 @@ export default function ItemForm({ categories, onSave, onCancel, initial = {}, u
           onChange={(e) => set('description', e.target.value)}
           placeholder="Ingredientes y detalles..."
           rows={3}
-          className="w-full bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-[#D4A017] resize-none"
+          className="w-full bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-[#ff6600] resize-none"
         />
       </div>
 
@@ -85,7 +85,7 @@ export default function ItemForm({ categories, onSave, onCancel, initial = {}, u
             onChange={(e) => set('price', e.target.value)}
             placeholder="750"
             min={0}
-            className="w-full bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-[#D4A017]"
+            className="w-full bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-[#ff6600]"
           />
         </div>
         <div className="flex-1">
@@ -93,7 +93,7 @@ export default function ItemForm({ categories, onSave, onCancel, initial = {}, u
           <select
             value={form.badge}
             onChange={(e) => set('badge', e.target.value)}
-            className="w-full bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-[#D4A017]"
+            className="w-full bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-[#ff6600]"
           >
             {BADGES.map((b) => <option key={b} value={b}>{b || '— Sin badge —'}</option>)}
           </select>
@@ -108,7 +108,7 @@ export default function ItemForm({ categories, onSave, onCancel, initial = {}, u
             value={form.imageUrl}
             onChange={(e) => set('imageUrl', e.target.value)}
             placeholder="https://... o subí un archivo →"
-            className="flex-1 bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-[#D4A017] text-sm"
+            className="flex-1 bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-[#ff6600] text-sm"
           />
           {uploadImage && (
             <>
@@ -116,7 +116,7 @@ export default function ItemForm({ categories, onSave, onCancel, initial = {}, u
                 type="button"
                 onClick={() => fileRef.current?.click()}
                 disabled={uploading}
-                className="bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-3 py-2.5 text-gray-400 hover:text-white hover:border-[#D4A017] transition-colors cursor-pointer text-sm disabled:opacity-50"
+                className="bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-3 py-2.5 text-gray-400 hover:text-white hover:border-[#ff6600] transition-colors cursor-pointer text-sm disabled:opacity-50"
               >
                 {uploading ? '…' : '📁'}
               </button>
@@ -137,7 +137,7 @@ export default function ItemForm({ categories, onSave, onCancel, initial = {}, u
       <div className="flex gap-3 pt-2">
         <button
           type="submit"
-          className="flex-1 bg-[#D4A017] text-black font-semibold py-2.5 rounded-xl hover:bg-[#e6b020] transition-colors cursor-pointer"
+          className="flex-1 bg-[#ff6600] text-black font-semibold py-2.5 rounded-xl hover:bg-[#ff7a1a] transition-colors cursor-pointer"
         >
           Guardar
         </button>
@@ -154,3 +154,4 @@ export default function ItemForm({ categories, onSave, onCancel, initial = {}, u
     </form>
   )
 }
+

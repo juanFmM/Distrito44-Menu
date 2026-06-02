@@ -1,4 +1,4 @@
-export default function MenuItemCard({ item, index = 0 }) {
+﻿export default function MenuItemCard({ item, index = 0 }) {
   const image = item.imageUrl || item.image_url
   const delay = ['delay-0','delay-1','delay-2','delay-3','delay-4','delay-5'][index % 6]
 
@@ -21,7 +21,7 @@ export default function MenuItemCard({ item, index = 0 }) {
         <div className="flex justify-between items-start gap-2">
           <h3 className="font-display text-2xl text-white leading-tight">{item.name}</h3>
           {item.badge && (
-            <span className="text-xs bg-[#D4A017]/10 text-[#D4A017] border border-[#D4A017]/20 px-2.5 py-1 rounded-full whitespace-nowrap font-medium flex-shrink-0">
+            <span className="text-xs bg-[#ff6600]/10 text-[#ff6600] border border-[#ff6600]/20 px-2.5 py-1 rounded-full whitespace-nowrap font-medium flex-shrink-0">
               {item.badge}
             </span>
           )}
@@ -31,7 +31,7 @@ export default function MenuItemCard({ item, index = 0 }) {
 
         <div className="flex items-center justify-between mt-1 pt-3 border-t border-[#2e2e2e]">
           {item.price ? (
-            <span className="font-display text-3xl text-[#D4A017]">${item.price}</span>
+            <span className="font-display text-3xl text-[#ff6600]">${item.price}</span>
           ) : (
             <span className="text-sm text-gray-500 italic">Precio a consultar</span>
           )}
@@ -40,3 +40,4 @@ export default function MenuItemCard({ item, index = 0 }) {
     </div>
   )
 }
+

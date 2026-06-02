@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import CategoryForm from './CategoryForm'
 import ItemForm from './ItemForm'
 import Dashboard from './Dashboard'
@@ -38,10 +38,11 @@ export default function AdminPanel({
       {/* Header */}
       <header className="bg-[#111111] border-b border-[#2e2e2e] px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <span className="text-[#D4A017] text-2xl">⚙️</span>
+          <img src="/logo-clean.svg" alt="Distrito 44" className="h-9 w-auto opacity-90" />
+          <div className="w-px h-6 bg-[#2e2e2e]" />
           <div>
-            <h1 className="font-display text-2xl text-white leading-none">Panel de Admin</h1>
-            <p className="text-gray-600 text-xs">Distrito 44</p>
+            <h1 className="font-display text-xl text-white leading-none">Panel de Admin</h1>
+            <p className="text-gray-600 text-xs">Garden Food Truck</p>
           </div>
         </div>
 
@@ -74,7 +75,7 @@ export default function AdminPanel({
       {/* User info banner */}
       {user && (
         <div className="bg-[#1a1a1a] border-b border-[#2e2e2e] px-6 py-2 flex items-center gap-2">
-          <div className="w-2 h-2 bg-[#D4A017] rounded-full"></div>
+          <div className="w-2 h-2 bg-[#ff6600] rounded-full"></div>
           <p className="text-xs text-gray-500">
             Sesión como <span className="text-gray-300">{user.email}</span>
           </p>
@@ -93,7 +94,7 @@ export default function AdminPanel({
               key={key}
               onClick={() => setTab(key)}
               className={`px-5 py-3 text-sm font-medium transition-all cursor-pointer border-b-2 -mb-px
-                ${tab === key ? 'text-[#D4A017] border-[#D4A017]' : 'text-gray-500 border-transparent hover:text-gray-300'}`}
+                ${tab === key ? 'text-[#ff6600] border-[#ff6600]' : 'text-gray-500 border-transparent hover:text-gray-300'}`}
             >
               {label}
             </button>
@@ -130,7 +131,7 @@ export default function AdminPanel({
               </div>
               <button
                 onClick={() => setShowNewItem(true)}
-                className="bg-[#D4A017] text-black font-semibold px-5 py-2.5 rounded-xl hover:bg-[#e6b020] transition-colors cursor-pointer text-sm whitespace-nowrap"
+                className="bg-[#ff6600] text-black font-semibold px-5 py-2.5 rounded-xl hover:bg-[#ff7a1a] transition-colors cursor-pointer text-sm whitespace-nowrap"
               >
                 + Agregar plato
               </button>
@@ -141,7 +142,7 @@ export default function AdminPanel({
               <button
                 onClick={() => setFilterCat('all')}
                 className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors cursor-pointer
-                  ${filterCat === 'all' ? 'bg-[#D4A017] text-black border-[#D4A017]' : 'border-[#2e2e2e] text-gray-400 hover:border-[#D4A017]'}`}
+                  ${filterCat === 'all' ? 'bg-[#ff6600] text-black border-[#ff6600]' : 'border-[#2e2e2e] text-gray-400 hover:border-[#ff6600]'}`}
               >
                 Todos ({items.length})
               </button>
@@ -152,7 +153,7 @@ export default function AdminPanel({
                     key={cat.id}
                     onClick={() => setFilterCat(cat.id)}
                     className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors cursor-pointer
-                      ${filterCat === cat.id ? 'bg-[#D4A017] text-black border-[#D4A017]' : 'border-[#2e2e2e] text-gray-400 hover:border-[#D4A017]'}`}
+                      ${filterCat === cat.id ? 'bg-[#ff6600] text-black border-[#ff6600]' : 'border-[#2e2e2e] text-gray-400 hover:border-[#ff6600]'}`}
                   >
                     {cat.emoji} {cat.name} ({count})
                   </button>
@@ -162,7 +163,7 @@ export default function AdminPanel({
 
             {/* Formulario nuevo ítem */}
             {showNewItem && (
-              <div className="bg-[#1a1a1a] border border-[#D4A017]/30 rounded-2xl p-5 mb-5">
+              <div className="bg-[#1a1a1a] border border-[#ff6600]/30 rounded-2xl p-5 mb-5">
                 <h3 className="text-white font-semibold mb-4">Nuevo plato</h3>
                 <ItemForm
                   categories={categories}
@@ -178,7 +179,7 @@ export default function AdminPanel({
               {filteredItems.map((item) => (
                 <div key={item.id}>
                   {editingItem === item.id ? (
-                    <div className="bg-[#1a1a1a] border border-[#D4A017]/30 rounded-2xl p-5">
+                    <div className="bg-[#1a1a1a] border border-[#ff6600]/30 rounded-2xl p-5">
                       <h3 className="text-white font-semibold mb-4">Editar plato</h3>
                       <ItemForm
                         categories={categories}
@@ -199,7 +200,7 @@ export default function AdminPanel({
                       )}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
-                          <span className="text-sm text-[#D4A017]">{getCategoryEmoji(item.categoryId || item.category_id)}</span>
+                          <span className="text-sm text-[#ff6600]">{getCategoryEmoji(item.categoryId || item.category_id)}</span>
                           <span className="text-white font-medium text-sm truncate">{item.name}</span>
                           {item.badge && <span className="text-xs text-gray-500 hidden sm:block">{item.badge}</span>}
                         </div>
@@ -207,7 +208,7 @@ export default function AdminPanel({
                       </div>
                       <div className="flex items-center gap-3 flex-shrink-0">
                         {item.price
-                          ? <span className="text-[#D4A017] font-semibold text-sm">${item.price}</span>
+                          ? <span className="text-[#ff6600] font-semibold text-sm">${item.price}</span>
                           : <span className="text-gray-600 text-xs">S/P</span>
                         }
                         <button onClick={() => setEditingItem(item.id)} className="text-gray-500 hover:text-white transition-colors cursor-pointer text-sm px-1">✏️</button>
@@ -237,14 +238,14 @@ export default function AdminPanel({
               </div>
               <button
                 onClick={() => setShowNewCat(true)}
-                className="bg-[#D4A017] text-black font-semibold px-5 py-2.5 rounded-xl hover:bg-[#e6b020] transition-colors cursor-pointer text-sm whitespace-nowrap"
+                className="bg-[#ff6600] text-black font-semibold px-5 py-2.5 rounded-xl hover:bg-[#ff7a1a] transition-colors cursor-pointer text-sm whitespace-nowrap"
               >
                 + Nueva categoría
               </button>
             </div>
 
             {showNewCat && (
-              <div className="bg-[#1a1a1a] border border-[#D4A017]/30 rounded-2xl p-5 mb-5">
+              <div className="bg-[#1a1a1a] border border-[#ff6600]/30 rounded-2xl p-5 mb-5">
                 <h3 className="text-white font-semibold mb-4">Nueva categoría</h3>
                 <CategoryForm
                   onSave={(data) => safe(() => addCategory(data)).then(() => setShowNewCat(false))}
@@ -259,7 +260,7 @@ export default function AdminPanel({
                 return (
                   <div key={cat.id}>
                     {editingCat === cat.id ? (
-                      <div className="bg-[#1a1a1a] border border-[#D4A017]/30 rounded-2xl p-5">
+                      <div className="bg-[#1a1a1a] border border-[#ff6600]/30 rounded-2xl p-5">
                         <h3 className="text-white font-semibold mb-4">Editar categoría</h3>
                         <CategoryForm
                           initial={cat}
@@ -320,3 +321,4 @@ export default function AdminPanel({
     </div>
   )
 }
+

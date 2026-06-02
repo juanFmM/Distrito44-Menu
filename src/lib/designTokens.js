@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Distrito 44 — Design Tokens
  * Adaptado de Theme Factory skill (awesome-claude-skills/theme-factory)
  *
@@ -9,9 +9,9 @@
 export const tokens = {
   // Brand colors
   brand: {
-    gold:       '#D4A017',
-    goldLight:  '#E6B020',
-    goldMuted:  'rgba(212,160,23,0.15)',
+    gold:       '#ff6600',
+    goldLight:  '#ff7a1a',
+    goldMuted:  'rgba(255,102,0,0.15)',
   },
 
   // Surfaces (dark scale)
@@ -68,9 +68,10 @@ export const tokens = {
   // Shadows
   shadow: {
     card:   '0 4px 16px rgba(0,0,0,0.4)',
-    cardHover: '0 8px 24px rgba(212,160,23,0.15)',
+    cardHover: '0 8px 24px rgba(255,102,0,0.15)',
     modal:  '0 20px 60px rgba(0,0,0,0.7)',
   },
 }
 
 export default tokens
+

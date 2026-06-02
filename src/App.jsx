@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { useMenuData } from './hooks/useMenuData'
 import { useAuth }     from './hooks/useAuth'
 import MenuPage        from './components/Menu/MenuPage'
@@ -35,7 +35,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-[#111111] flex items-center justify-center">
         <div className="text-center">
-          <div className="w-8 h-8 border-2 border-[#D4A017] border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
+          <div className="w-8 h-8 border-2 border-[#ff6600] border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
           <p className="text-gray-600 text-sm">Cargando…</p>
         </div>
       </div>
@@ -47,8 +47,8 @@ export default function App() {
     return (
       <div className="min-h-screen bg-[#111111] flex items-center justify-center">
         <div className="text-center">
-          <p className="font-display text-4xl text-[#D4A017] mb-3">Distrito 44</p>
-          <div className="w-6 h-6 border-2 border-[#D4A017] border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <p className="font-display text-4xl text-[#ff6600] mb-3">Distrito 44</p>
+          <div className="w-6 h-6 border-2 border-[#ff6600] border-t-transparent rounded-full animate-spin mx-auto"></div>
         </div>
       </div>
     )
@@ -101,10 +101,11 @@ export default function App() {
       {/* FAB — solo visible para admin o para ir a login */}
       <button
         onClick={handleAdminClick}
-        className="fab fixed bottom-6 right-6 flex items-center gap-2 bg-[#D4A017] text-black font-semibold px-5 py-3 rounded-full shadow-xl cursor-pointer text-sm z-50"
+        className="fab fixed bottom-6 right-6 flex items-center gap-2 bg-[#ff6600] text-black font-semibold px-5 py-3 rounded-full shadow-xl cursor-pointer text-sm z-50"
       >
         {user ? '⚙️ Administrar' : '🔐 Admin'}
       </button>
     </div>
   )
 }
+

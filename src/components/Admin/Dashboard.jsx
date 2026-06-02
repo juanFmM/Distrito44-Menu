@@ -1,4 +1,4 @@
-import { useMemo, useEffect, useState } from 'react'
+﻿import { useMemo, useEffect, useState } from 'react'
 
 function useCountUp(target, duration = 800) {
   const [value, setValue] = useState(0)
@@ -16,7 +16,7 @@ function useCountUp(target, duration = 800) {
   return value
 }
 
-function StatCard({ icon, label, value, sub, color = '#D4A017', delay = 0 }) {
+function StatCard({ icon, label, value, sub, color = '#ff6600', delay = 0 }) {
   const animated = useCountUp(typeof value === 'number' ? value : 0)
   return (
     <div
@@ -42,7 +42,7 @@ function StatCard({ icon, label, value, sub, color = '#D4A017', delay = 0 }) {
 
 function TopBar({ item, maxSales, rank, delay }) {
   const pct = maxSales > 0 ? Math.round((item.sales_count / maxSales) * 100) : 0
-  const colors = ['#D4A017', '#C0C0C0', '#CD7F32', '#6b7280', '#6b7280']
+  const colors = ['#ff6600', '#C0C0C0', '#CD7F32', '#6b7280', '#6b7280']
   const color  = colors[rank] || '#4b5563'
 
   return (
@@ -101,7 +101,7 @@ function CategoryBreakdown({ categories, items }) {
               </div>
             </div>
             <div className="text-right">
-              <p className="text-[#D4A017] font-semibold text-sm">{totalSales}</p>
+              <p className="text-[#ff6600] font-semibold text-sm">{totalSales}</p>
               <p className="text-gray-600 text-xs">ventas</p>
             </div>
           </div>
@@ -151,7 +151,7 @@ export default function Dashboard({ categories, items, updateItem }) {
             <div className="text-center py-8 text-gray-600">
               <p className="text-3xl mb-2">📊</p>
               <p className="text-sm">Aún no hay ventas registradas.</p>
-              <p className="text-xs mt-1">Usá el botón <span className="text-[#D4A017]">+1 venta</span> en la lista de abajo.</p>
+              <p className="text-xs mt-1">Usá el botón <span className="text-[#ff6600]">+1 venta</span> en la lista de abajo.</p>
             </div>
           ) : (
             <div className="space-y-4">
@@ -177,7 +177,7 @@ export default function Dashboard({ categories, items, updateItem }) {
         <div className="mb-5">
           <h3 className="text-white font-semibold">🖊️ Registrar ventas manualmente</h3>
           <p className="text-gray-600 text-xs mt-0.5">
-            Tocá <span className="text-[#D4A017]">+1 venta</span> cada vez que vendas un plato para mantener el conteo actualizado.
+            Tocá <span className="text-[#ff6600]">+1 venta</span> cada vez que vendas un plato para mantener el conteo actualizado.
           </p>
         </div>
 
@@ -189,7 +189,7 @@ export default function Dashboard({ categories, items, updateItem }) {
               return (
                 <div
                   key={item.id}
-                  className="anim-fade-up flex items-center justify-between bg-[#111111] border border-[#2e2e2e] rounded-xl px-4 py-2.5 hover:border-[#D4A017]/20 transition-colors"
+                  className="anim-fade-up flex items-center justify-between bg-[#111111] border border-[#2e2e2e] rounded-xl px-4 py-2.5 hover:border-[#ff6600]/20 transition-colors"
                   style={{ animationDelay: `${i * 25}ms` }}
                 >
                   <div className="flex items-center gap-2 min-w-0">
@@ -197,12 +197,12 @@ export default function Dashboard({ categories, items, updateItem }) {
                     <span className="text-white text-sm font-medium truncate">{item.name}</span>
                   </div>
                   <div className="flex items-center gap-3 flex-shrink-0">
-                    <span className="text-[#D4A017] font-display text-xl w-8 text-right">
+                    <span className="text-[#ff6600] font-display text-xl w-8 text-right">
                       {item.sales_count || 0}
                     </span>
                     <button
                       onClick={() => handleIncrement(item)}
-                      className="bg-[#D4A017]/10 hover:bg-[#D4A017] text-[#D4A017] hover:text-black border border-[#D4A017]/30 hover:border-[#D4A017] text-xs font-semibold px-3 py-1.5 rounded-lg transition-all duration-200 cursor-pointer whitespace-nowrap"
+                      className="bg-[#ff6600]/10 hover:bg-[#ff6600] text-[#ff6600] hover:text-black border border-[#ff6600]/30 hover:border-[#ff6600] text-xs font-semibold px-3 py-1.5 rounded-lg transition-all duration-200 cursor-pointer whitespace-nowrap"
                     >
                       + 1 venta
                     </button>
@@ -216,3 +216,4 @@ export default function Dashboard({ categories, items, updateItem }) {
     </div>
   )
 }
+

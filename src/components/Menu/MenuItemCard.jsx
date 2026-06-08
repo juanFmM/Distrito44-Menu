@@ -1,25 +1,28 @@
 import { useState } from 'react'
 import ImageLightbox from './ImageLightbox'
 
-const BADGE_MAP = {
-  '⭐ Popular':        'Popular',
-  '🔥 Especial':       'Especial',
-  '🌶️ Picante':       'Picante',
-  '🍗 Combo':          'Combo',
-  '🇦🇷 Clásica':      'Clásica',
-  '🍫 Personalizable': 'Personalizable',
-  '🆕 Nuevo':          'Nuevo',
+const BADGE_CONFIG = {
+  Popular:        { icon: 'fa-solid fa-star',         color: '#ff6600' },
+  Especial:       { icon: 'fa-solid fa-fire',          color: '#ff7a1a' },
+  Picante:        { icon: 'fa-solid fa-pepper-hot',    color: '#ef4444' },
+  Combo:          { icon: 'fa-solid fa-layer-group',   color: '#ff6600' },
+  Clásica:        { icon: 'fa-solid fa-crown',         color: '#ff6600' },
+  Personalizable: { icon: 'fa-solid fa-sliders',       color: '#9ca3af' },
+  Nuevo:          { icon: 'fa-solid fa-bolt',          color: '#ff6600' },
 }
 
-function cleanBadge(badge) {
+// Strip legacy emoji prefix if badge was stored with emoji (e.g. "⭐ Popular" → "Popular")
+function normalizeBadge(badge) {
   if (!badge) return null
-  return BADGE_MAP[badge] || badge.replace(/[\u{1F300}-\u{1FFFF}]/gu, '').trim() || null
+  const cleaned = badge.replace(/[\u{1F300}-\u{1FFFF}\u{2600}-\u{27BF}\u{1F1E0}-\u{1F1FF}]/gu, '').trim()
+  return cleaned || null
 }
 
 export default function MenuItemCard({ item, index = 0 }) {
   const [lightbox, setLightbox] = useState(false)
   const image = item.imageUrl || item.image_url
-  const badge = cleanBadge(item.badge)
+  const badge = normalizeBadge(item.badge)
+  const badgeCfg = badge ? BADGE_CONFIG[badge] : null
   const delay = ['delay-0','delay-1','delay-2','delay-3','delay-4','delay-5'][index % 6]
 
   return (
@@ -57,8 +60,13 @@ export default function MenuItemCard({ item, index = 0 }) {
               </div>
             </div>
 
-            {badge && (
-              <span className="absolute top-3 right-3 label-caps bg-[#0c0b09]/80 text-[#ff6600] border border-[#ff6600]/30 px-2.5 py-1 rounded-sm backdrop-blur-sm pointer-events-none">
+            {/* Badge sobre imagen */}
+            {badgeCfg && (
+              <span
+                className="absolute top-3 right-3 label-caps bg-[#0c0b09]/80 backdrop-blur-sm pointer-events-none px-2.5 py-1 rounded-sm flex items-center gap-1.5"
+                style={{ color: badgeCfg.color, border: `1px solid ${badgeCfg.color}30` }}
+              >
+                <i className={`${badgeCfg.icon} text-[0.55rem]`} />
                 {badge}
               </span>
             )}
@@ -66,8 +74,16 @@ export default function MenuItemCard({ item, index = 0 }) {
         )}
 
         <div className="p-5 flex flex-col gap-3 flex-1">
-          {!image && badge && (
-            <span className="label-caps text-[#ff6600] self-start border-b border-[#ff6600]/30 pb-0.5">
+          {/* Badge cuando no hay imagen */}
+          {!image && badgeCfg && (
+            <span
+              className="label-caps self-start pb-0.5 flex items-center gap-1.5"
+              style={{
+                color: badgeCfg.color,
+                borderBottom: `1px solid ${badgeCfg.color}30`,
+              }}
+            >
+              <i className={`${badgeCfg.icon} text-[0.55rem]`} />
               {badge}
             </span>
           )}

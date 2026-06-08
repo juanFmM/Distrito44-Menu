@@ -2,37 +2,37 @@ export const initialCategories = [
   {
     id: 'entradas',
     name: 'Entradas',
-    emoji: '🧀',
+    icon: 'fa-solid fa-cheese',
     description: 'Bocados para compartir',
   },
   {
     id: 'papas',
     name: 'Papas',
-    emoji: '🍟',
+    icon: 'fa-solid fa-bowl-food',
     description: 'Papas fritas con toppings especiales',
   },
   {
     id: 'sandwiches',
     name: 'Sándwiches',
-    emoji: '🥖',
+    icon: 'fa-solid fa-bread-slice',
     description: 'Clásicos callejeros',
   },
   {
     id: 'smash-burgers',
     name: 'Smash Burgers',
-    emoji: '🍔',
+    icon: 'fa-solid fa-burger',
     description: 'Smash burgers y combos',
   },
   {
     id: 'burgers',
     name: 'Burgers Premium',
-    emoji: '🥩',
+    icon: 'fa-solid fa-fire',
     description: 'Hamburguesas premium 7 oz',
   },
   {
     id: 'postres',
     name: 'Postres',
-    emoji: '🍓',
+    icon: 'fa-solid fa-ice-cream',
     description: 'Para cerrar con dulzura',
   },
 ];
@@ -53,7 +53,7 @@ export const initialItems = [
     name: 'Gouditas',
     description: 'Triángulos crujientes de cheddar y jalapeño.',
     price: 400,
-    badge: '🌶️ Picante',
+    badge: 'Picante',
   },
   {
     id: 'e3',
@@ -61,7 +61,7 @@ export const initialItems = [
     name: 'Nachitos Picantes',
     description: 'Bites rellenos de queso gouda cremoso.',
     price: 400,
-    badge: '🌶️ Picante',
+    badge: 'Picante',
   },
 
   // PAPAS
@@ -79,7 +79,7 @@ export const initialItems = [
     name: 'Pulled Pork Fries',
     description: 'Papas fritas crujientes con queso cheddar, pulled pork y salsa BBQ.',
     price: 750,
-    badge: '⭐ Popular',
+    badge: 'Popular',
   },
 
   // SÁNDWICHES
@@ -89,7 +89,7 @@ export const initialItems = [
     name: 'Philly Cheesesteak',
     description: 'Clásico Philly con tiras de carne Angus y cheese whiz casero, estilo 100% callejero.',
     price: 750,
-    badge: '⭐ Popular',
+    badge: 'Popular',
   },
 
   // SMASH BURGERS
@@ -115,7 +115,7 @@ export const initialItems = [
     name: 'Chicken & Fries',
     description: 'Combo de Chicken Nuggets y papas fritas.',
     price: 450,
-    badge: '🍗 Combo',
+    badge: 'Combo',
   },
   {
     id: 'sb4',
@@ -131,7 +131,7 @@ export const initialItems = [
     name: 'Oklahoma',
     description: 'Doble carne 14 oz de res premium con queso americano y bacon crujiente.',
     price: 815,
-    badge: '🔥 Especial',
+    badge: 'Especial',
   },
   {
     id: 'sb6',
@@ -157,7 +157,7 @@ export const initialItems = [
     name: 'Gaucho Burger',
     description: 'Carne 7 oz, mermelada de morrón, provoleta y chimichurri.',
     price: 770,
-    badge: '🇦🇷 Clásica',
+    badge: 'Clásica',
   },
   {
     id: 'b3',
@@ -165,7 +165,7 @@ export const initialItems = [
     name: 'BBQ Burger',
     description: 'Carne 7 oz, pulled pork y aros de cebolla en salsa BBQ.',
     price: 725,
-    badge: '⭐ Popular',
+    badge: 'Popular',
   },
   {
     id: 'b4',
@@ -181,7 +181,7 @@ export const initialItems = [
     name: 'La Picante',
     description: 'Carne 7 oz, salsa picante, cebolla encurtida y queso americano.',
     price: 650,
-    badge: '🌶️ Picante',
+    badge: 'Picante',
   },
 
   // POSTRES
@@ -191,6 +191,6 @@ export const initialItems = [
     name: 'Postre',
     description: 'Base: fresa o banana · Salsa: nutella o dulce de leche · Topping: oreo o maní.',
     price: null,
-    badge: '🍫 Personalizable',
+    badge: 'Personalizable',
   },
 ];
